@@ -3,7 +3,7 @@
 
 ![Original camera from the manufacturer's website](https://www.trailcampro.com/cdn/shop/products/reconyx_HF2_FA_420_400x.jpg?v=1637358072)
 
-This repository includes some work on 3D models dedicated to attach a lens to the camera. The HyperFire camera is a rugged system designed for wild-life monitoring. As a result, the lens focus is fixed to infinity (a few meters away from the camera) and cannot be changed. In our application where the camera takes pictures of images relatively close to the lens, this leads to blurry images. Although this is not a problem in its normal use case, the camera is far-sighted (or even presbyopic) for our very specific use case (probably outside of the camera specifications in the first place) and it needs correction glasses. 
+This repository includes some work on 3D models dedicated to attach a lens to the camera. The HyperFire camera is a rugged system designed for wild-life monitoring. As a result, the lens focus is fixed to infinity (a few meters away from the camera) and cannot be changed. In our application where the camera takes pictures of images relatively close to the lens, this leads to blurry images. Although this is not a problem in its normal use case, the camera is far-sighted (or even presbyopic) for our very specific use case (probably outside of the camera specifications in the first place) and it needs prescription glasses. 
 
 ## Lens testing
 After some testing with my optometrist, this is the effect of choosing glasses from +2.0 to 3.5 dioptries, to observe an object 40cm away from the camera.
