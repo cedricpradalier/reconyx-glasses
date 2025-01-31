@@ -36,7 +36,7 @@ The second design (reconyx_box.scad) is still to be tested. It is kept in place 
 
 ## Finding lenses
 
-The proposed model is designed to hold optometrist test lenses, which are 38mm wide and 2mm thick. It is relatively easy to find 40mm lenses as high-school optics material. 
+The proposed model is designed to hold [optometrist test lenses](https://m.media-amazon.com/images/I/51xljETiMxL._AC_SX679_.jpg), which are 38mm wide and 2mm thick. It is relatively easy to find 40mm lenses as [high-school optics material](https://jeulin.com/ovio_fr/pr-323333.html). This can be changed with the Dlens and Tlens variables in the scad files. 
 
 The rule of thumb for selecting the focal or the dioptries is simple. The focal should approximately be equivalent to the distance at which the animals are going to be imaged. The focal resulting from a lens is the inverse of the dioptries, in m. 
 
