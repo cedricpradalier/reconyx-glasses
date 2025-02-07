@@ -29,10 +29,12 @@ The first design (reconyx_clip.scad) clips on the camera without any enclosure.
 
 ![camera with clipped lenses CAD2](images/reconyx_clip_2.png)
 
-The second design (reconyx_box.scad) is still to be tested. It is kept in place by [Reconyx enclosure box](https://www.reconyx.com/product/HyperFire-2-Security-Enclosure).
+The second design (reconyx_box.scad) is kept in place by [Reconyx enclosure box](https://www.reconyx.com/product/HyperFire-2-Security-Enclosure).
 
-![camera with clipped lenses CAD2](images/reconyx_box_1.png)
+![camera with clipped lenses CAD](images/reconyx_box_1.png)
 
+
+![camera with box lens](images/IMG_20250207_173741.jpg)
 
 ## Finding lenses
 
