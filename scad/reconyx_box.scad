@@ -7,8 +7,13 @@ T=3;
 Dobj=20;
 Dled=10;
 
-Dlens=38;
+       
+testLens=1;
+
+Dlens=testLens?38:40;
 Tlens=2.05;
+Dholder=testLens?1.5:1.0;
+
 Nlens=1;
 Lstart=11;
 Lholder_ex=4;
@@ -21,8 +26,7 @@ earScrew=3.2;
 // size of the rotated square removed in the piece corners
 halfdiag=9;
 face=halfdiag/(sqrt(2)/2)+0.001;
-        
-
+ 
 module ear() {
     difference() {
         cube([8,earT,Lear]);
@@ -41,10 +45,12 @@ difference() {
             
              translate([0,0,T+0.001]) difference() {
                 rotate([0,0,180+alpha]) rotate_extrude(angle=180,$fn=100) {
-                     square([Dlens/2+1.5,Lholder]);
+                     square([Dlens/2+Dholder,Lholder]);
                  }
                 color("green") union() {
                     translate([0,0,-1]) cylinder(h=Lholder+2,r=Dlens/2-3,$fn=100);
+                    translate([19,-Dobj/2-1,0]) cube([2,H,5.5]);
+                    translate([-21,-Dobj/2-1,0]) cube([2,H,5.5]);
                     for (i = [0:Nlens-1]) {
                         translate([0,0,Lstart+i*(Tlens+1)]) cylinder(h=Tlens,r=Dlens/2,$fn=100);
                     }
@@ -65,7 +71,7 @@ difference() {
                 translate([0,0,T-0.001]) difference() {
                     union() {
                         translate([0,0,8]) rotate([0,0,alpha]) rotate_extrude(angle=180,$fn=100) {
-                         square([Dlens/2+1.5,Lholder-8]);
+                         square([Dlens/2+Dholder,Lholder-8]);
                      }
                      difference() {
                          union() {
@@ -110,7 +116,7 @@ difference() {
                 difference() {
                     translate([0,0,-Dobj/2-1+T*sqrt(2)]) rotate([-45,0,0]) 
                         translate([0,0,-T]) scale([1,sqrt(2),1]) 
-                        cylinder(h=T,r=Dlens/2+1.5,$fn=100);
+                        cylinder(h=T,r=Dlens/2+Dholder,$fn=100);
                     translate([-Dlens/2-2.5,-Dlens/2-2.5,-Dlens*sqrt(2)+0.001]) cube([Dlens+5,Dlens+5,Dlens*sqrt(2)]);
                     
                 }
@@ -132,7 +138,7 @@ difference() {
         }
         
     union() {
-//           translate([-100,-50,4]) cube([200,100,100]);
+           // translate([-100,-50,6]) cube([200,100,100]);
             //translate([-100,footH/2,-40]) cube([200,100,100]);
 
         translate([-16,0,-0.75]) cube([32,H/2+1.5,T+1+8]);
@@ -143,12 +149,13 @@ difference() {
         translate([-W/2,-Dobj/2-1,T-2]) 
             rotate([0,0,45]) translate([-face/2,-face/2,0]) cube([face,face,3]);
         
-        
-        // Opening for test lens handle
-        Whandle=12;
-        rotate([0,0,-30]) translate([Dlens/2-6,-Whandle/2,Lholder+T-(Tlens+2+Lholder_ex)+0.002]) union() {
-            cube([10,Whandle,(Tlens+2)]);
-            //translate([0,Whandle,0]) cube([10,Whandle,Tlens]);
+        if (testLens) {
+            // Opening for test lens handle
+            Whandle=12;
+            rotate([0,0,-30]) translate([Dlens/2-6,-Whandle/2,Lholder+T-(Tlens+2+Lholder_ex)+0.002]) union() {
+                cube([10,Whandle,(Tlens+2)]);
+                //translate([0,Whandle,0]) cube([10,Whandle,Tlens]);
+            }
         }
     }
 }
