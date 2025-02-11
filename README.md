@@ -34,7 +34,15 @@ The second design (reconyx_box.scad) is kept in place by [Reconyx enclosure box]
 ![camera with clipped lenses CAD](images/reconyx_box_1.png)
 
 
+The camera, in its enclosure, with the lens on is displayed here:
+
 ![camera with box lens](images/IMG_20250211_101950.jpg)
+
+Adding a tiny rubber band forces the lens in place, while keeping a little bit of flexibility when opening or closing the enclosure:
+
+
+![camera with box lens and rubber](images/IMG_20250211_140146.jpg)
+
 
 ## Finding lenses
 
