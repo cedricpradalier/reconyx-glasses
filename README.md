@@ -34,7 +34,7 @@ The second design (reconyx_box.scad) is kept in place by [Reconyx enclosure box]
 ![camera with clipped lenses CAD](images/reconyx_box_1.png)
 
 
-![camera with box lens](images/IMG_20250207_173741.jpg)
+![camera with box lens](images/IMG_20250211_101950.jpg)
 
 ## Finding lenses
 

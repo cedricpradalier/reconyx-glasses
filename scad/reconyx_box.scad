@@ -19,7 +19,8 @@ Lear=12;
 earT=3;
 earScrew=3.2;
 // size of the rotated square removed in the piece corners
-face=9/(sqrt(2)/2)+0.001;
+halfdiag=9;
+face=halfdiag/(sqrt(2)/2)+0.001;
         
 
 module ear() {
@@ -96,10 +97,10 @@ difference() {
         translate([-W/2-5,-Dobj/2-1+H-5,-1+0.001]) cube([15,5,1+T]);
         translate([-W/2-15,-Dobj/2-1+H-5,0]) cube([15,5,1]);
         
-        if (0) {
+        if (1) {
             // little ears to stay attached to the box surface
-            translate([W/2-3,-Dobj/2-1+face,T]) cube([8,H-face,1]);
-            translate([-W/2-5,-Dobj/2-1+face,T]) cube([8,H-face,1]);
+            translate([W/2-3,-Dobj/2-1+halfdiag,T]) cube([8,H-halfdiag,1]);
+            translate([-W/2-5,-Dobj/2-1+halfdiag,T]) cube([8,H-halfdiag,1]);
         }
         
         difference() {
@@ -134,7 +135,8 @@ difference() {
 //           translate([-100,-50,4]) cube([200,100,100]);
             //translate([-100,footH/2,-40]) cube([200,100,100]);
 
-        translate([-16,0,-0.75]) cube([32,H/2+1.5,T+1.5+8]);
+        translate([-16,0,-0.75]) cube([32,H/2+1.5,T+1+8]);
+        translate([-16,-T*sqrt(3),-0.75]) rotate([-60,0,0]) cube([32,H/2+1.5,T*5]);
         
         translate([W/2,-Dobj/2-1,T-2]) 
             rotate([0,0,45]) translate([-face/2,-face/2,0]) cube([face,face,3]);
@@ -144,7 +146,7 @@ difference() {
         
         // Opening for test lens handle
         Whandle=12;
-        rotate([0,0,-45]) translate([Dlens/2-6,-Whandle/2,Lholder+T-(Tlens+2+Lholder_ex)+0.002]) union() {
+        rotate([0,0,-30]) translate([Dlens/2-6,-Whandle/2,Lholder+T-(Tlens+2+Lholder_ex)+0.002]) union() {
             cube([10,Whandle,(Tlens+2)]);
             //translate([0,Whandle,0]) cube([10,Whandle,Tlens]);
         }
