@@ -5,6 +5,15 @@
 
 This repository includes some work on 3D models dedicated to attach a lens to the camera. The HyperFire camera is a rugged system designed for wild-life monitoring. As a result, the lens focus is fixed to infinity (a few meters away from the camera) and cannot be changed. In our application where the camera takes pictures of images relatively close to the lens, this leads to blurry images. Although this is not a problem in its normal use case, the camera is far-sighted (or even presbyopic) for our very specific use case (probably outside of the camera specifications in the first place) and it needs prescription glasses. 
 
+## Objectives
+In our use case, observing toads, tritons and salamanders in wildlife underpass, the effect is the following:
+
+![Original camera no correction](images/field_no_correction.jpg)
+
+With the proper correction:
+
+![Original camera correction](images/field_50cm_2delta.jpg)
+
 ## Lens testing
 After some testing with my [optometrist](https://www.remillyoptic.fr/), this is the effect of choosing glasses from +2.0 to 3.0 dioptries, to observe an object 40cm away from the camera.
 Without lenses:
