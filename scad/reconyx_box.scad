@@ -41,9 +41,9 @@ difference() {
         translate([0,0,explode?30:0]) 
          translate([0,0,Lholder+T-4]) rotate([0,0,screw?-30:0]) union() {
              color("blue") difference() {
-                cylinder(h=5, r=Dlens/2+Dholder+2,$fn=100);
+                cylinder(h=5, r=Dlens/2+Dholder+2.2,$fn=100);
                  union() {
-                    translate([0,0,-1]) cylinder(h=5, r=Dlens/2+Dholder+0.6,$fn=100);
+                    translate([0,0,-1]) cylinder(h=5, r=Dlens/2+Dholder+0.8,$fn=100);
                      rotate([0,0,0]) translate([0,0,-1]) rotate_extrude(angle=60,$fn=100) {
                         square([Dlens/2+Dholder+3,5]);
                  }
@@ -56,7 +56,7 @@ difference() {
             for (i=[0:4]) {
                 rotate([0,0,-10-90*i]) 
                     rotate_extrude(angle=10,$fn=60) {
-                       translate([Dlens/2+Dholder+0.6,2.7,0]) circle(0.5);
+                       translate([Dlens/2+Dholder+0.8,2.5,0]) circle(0.5);
                      }
                  }
         }
@@ -187,8 +187,8 @@ difference() {
         }
         
     union() {
-           //translate([-100,-50,6]) cube([200,100,100]);
-            //translate([-100,footH/2,-40]) cube([200,100,100]);
+           // translate([-100,-50,6]) cube([200,100,100]);
+            //translate([-100,-50,-40]) cube([200,100,40+T+12]);
         //rotate([0,0,-30]) translate([-100,0,6]) cube([200,100,100]);
            
         translate([-16,0,-0.75]) cube([32,H/2+1.5,T+1+8]);
