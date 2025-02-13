@@ -4,11 +4,19 @@ H45=17;
 W=92;
 T=3;
 
+explode=1; // exploded model      
+screw=0; // screw cap
+testLens=1; // type of lens, 1 = 38mm optometric insert, 0 = 40mm
+
+
 Dobj=20;
 Dled=10;
 
-Dlens=38;
+
+Dlens=testLens?38:40;
 Tlens=2.05;
+Dholder=testLens?1.5:1.0;
+
 Nlens=1;
 Lstart=11;
 Lholder_ex=4;
@@ -28,19 +36,57 @@ module ear() {
 
 difference() {
     union() {
+ // Cap
+        translate([0,0,explode?30:0]) 
+         translate([0,0,Lholder+T-4]) rotate([0,0,screw?-30:0]) union() {
+             color("blue") difference() {
+                cylinder(h=5, r=Dlens/2+Dholder+2.2,$fn=100);
+                 union() {
+                    translate([0,0,-1]) cylinder(h=5, r=Dlens/2+Dholder+0.8,$fn=100);
+                     rotate([0,0,0]) translate([0,0,-1]) rotate_extrude(angle=60,$fn=100) {
+                        square([Dlens/2+Dholder+3,5]);
+                 }
+                    rotate([0,0,180]) translate([0,0,-1]) rotate_extrude(angle=60,$fn=100) {
+                        square([Dlens/2+Dholder+3,5]);
+                 }
+                 }
+            }
+            color("black") 
+            for (i=[0:4]) {
+                rotate([0,0,-10-90*i]) 
+                    rotate_extrude(angle=10,$fn=60) {
+                       translate([Dlens/2+Dholder+0.8,2.5,0]) circle(0.5);
+                     }
+                 }
+        }
+
 
         color("grey") union() {
             translate([0,0,Lholder+T-Lear]) 
                 rotate([0,0,180+alpha]) translate([Dlens/2+0.5,0,0]) ear();
             translate([0,0,Lholder+T-Lear]) 
                 rotate([0,0,alpha]) translate([Dlens/2+0.5,-earT,0]) ear();
-            
+             
+            // Small rim to hold lens cap
+            translate([0,0,T+0.001]) {
+                rotate([0,0,180+alpha]) 
+                    rotate_extrude(angle=60,$fn=100) {
+                       translate([Dlens/2+Dholder,Lholder-0.5,0]) circle(0.5);
+                     }
+                rotate([0,0,180+alpha+90]) 
+                    rotate_extrude(angle=60,$fn=100) {
+                       translate([Dlens/2+Dholder,Lholder-0.5,0]) circle(0.5);
+                     }
+             }
+             
              translate([0,0,T+0.001]) difference() {
                 rotate([0,0,180+alpha]) rotate_extrude(angle=180,$fn=100) {
                      square([Dlens/2+1.5,Lholder]);
                  }
                 color("green") union() {
                     translate([0,0,-1]) cylinder(h=Lholder+2,r=Dlens/2-3,$fn=100);
+                    translate([19,-Dobj/2-1,0]) cube([2,H,5.5]);
+                    translate([-21,-Dobj/2-1,0]) cube([2,H,5.5]);
                     for (i = [0:Nlens-1]) {
                         translate([0,0,Lstart+i*(Tlens+1)]) cylinder(h=Tlens,r=Dlens/2,$fn=100);
                     }
@@ -51,12 +97,24 @@ difference() {
 
         color("pink") 
         //translate([0,0,2*(Lholder+T)+0.5]) rotate([180,0,0])
-        translate([0,30,0])
+        translate([0,explode?30:0,0])
         union() {
             translate([0,0,Lholder+T-Lear]) 
                 rotate([0,0,alpha]) translate([Dlens/2+0.5,0,0]) ear();
             translate([0,0,Lholder+T-Lear]) 
                 rotate([0,0,180+alpha]) translate([Dlens/2+0.5,-earT,0]) ear();
+              // Small rim to hold lens cap
+                translate([0,0,T+0.001]) {
+                    rotate([0,0,alpha]) 
+                        rotate_extrude(angle=60,$fn=100) {
+                           translate([Dlens/2+Dholder,Lholder-0.5,0]) circle(0.5);
+                         }
+                    rotate([0,0,alpha+90]) 
+                        rotate_extrude(angle=60,$fn=100) {
+                           translate([Dlens/2+Dholder,Lholder-0.5,0]) circle(0.5);
+                         }
+                 }
+            
             translate([0,0,T-0.001]) difference() {
                 union() {
                     translate([0,0,8]) rotate([0,0,alpha]) rotate_extrude(angle=180,$fn=100) {
@@ -132,11 +190,13 @@ difference() {
 //            translate([-100,-50,6]) cube([200,100,100]);
 //            translate([-100,footH/2,-40]) cube([200,100,100]);
         translate([-16,0,-0.75]) cube([32,H/2+1.5,T+1.5+8]);
-        // Opening for test lens handle
-        Whandle=12;
-        rotate([0,0,-45]) translate([Dlens/2-6,-Whandle/2,Lholder+T-(Tlens+2+Lholder_ex)+0.002]) union() {
-            cube([10,Whandle,(Tlens+2)]);
-            //translate([0,Whandle,0]) cube([10,Whandle,Tlens]);
+        if (testLens) {
+            // Opening for test lens handle
+            Whandle=12;
+            rotate([0,0,-30]) translate([Dlens/2-6,-Whandle/2,Lholder+T-(Tlens+2+Lholder_ex)+0.002]) union() {
+                cube([10,Whandle,(Tlens+2)]);
+                //translate([0,Whandle,0]) cube([10,Whandle,Tlens]);
+            }
         }
     }
 }

@@ -36,8 +36,8 @@ module ear() {
 }
 
 difference() {
-    // Cap
     union() {
+    // Cap
         translate([0,0,explode?30:0]) 
          translate([0,0,Lholder+T-4]) rotate([0,0,screw?-30:0]) union() {
              color("blue") difference() {
@@ -117,26 +117,36 @@ difference() {
                            translate([Dlens/2+Dholder,Lholder-0.5,0]) circle(0.5);
                          }
                  }
+                 
                 translate([0,0,T-0.001]) difference() {
+                    // Main lens holder (pink side)
                     union() {
                         translate([0,0,8]) rotate([0,0,alpha]) rotate_extrude(angle=180,$fn=100) {
                          square([Dlens/2+Dholder,Lholder-8]);
                      }
+                     // Bottom cube (pink side)
                      difference() {
                          union() {
                             translate([-19,-Dobj/2-1,0]) cube([38,H+3,T+1+5]);
                              translate([-19,-Dobj/2-1+H,-T]) cube([38,3,T]);
                          }
-                         rotate([0,0,180+alpha]) translate([-30,0,-1]) cube([60, H, T+1+10]);
+                         union() {
+                            rotate([0,0,180+alpha]) translate([-30,0,-1]) cube([60, H, T+1+10]);
+                            // Little grooves to hold the rubber band
+                            translate([-19,-Dobj/2-1+H+3,2]) cylinder(h=4,r=1.5);
+                            translate([19,-Dobj/2-1+H+3,2]) cylinder(h=4,r=1.5);
+                         }
                      }
                      
                  }
+                 // Cut-out in the pink side
                     color("green") union() {
                         translate([0,0,-1]) cylinder(h=Lholder+2,r=Dlens/2-3,$fn=100);
+                        // Lens groove
                         for (i = [0:Nlens-1]) {
                             translate([0,0,Lstart+i*(Tlens+1)]) cylinder(h=Tlens,r=Dlens/2,$fn=100);
                         }
-                        translate([0,-Dobj/2-1,0]) rotate([-45,0,0]) translate([-Dobj,-H45,-20]) cube([2*Dobj,H45,20]);
+                        
                         translate([-16,-10,-0.75]) cube([32,H/2+10+1.5,T+1.5+4]);
                     }
                 }
@@ -145,6 +155,7 @@ difference() {
             
         }
 
+        // Flaps to hold the lens holder against the camera enclosure
         translate([W/2-10,-Dobj/2-1,-1+0.001]) cube([15,5,1]);
         translate([W/2-10,-Dobj/2-1+H-5,-1+0.001]) cube([15,5,1+T]);
         translate([W/2,-Dobj/2-1+H-5,0]) cube([15,5,1]);
@@ -175,25 +186,22 @@ difference() {
                 color("green") translate([-26.5,0,-1]) cylinder(h=T+2,r=Dled/2,$fn=100);
                 color("green") translate([26.5,0,-1]) cylinder(h=T+2,r=Dled/2,$fn=100);
                 color("orange") translate([-16,0,-0.75]) cube([32,H/2+5,T+1.5]);
-//                color("orange") translate([-W/2,-6,-0.01]) cube([5,12,1]);
-//                color("orange") translate([W/2-5,-6,-0.01]) cube([5,12,1]);
-        //        color("orange") translate([-W/2+3.5,-0.2*H+1,-0.75]) cube([1.5,0.75*H,T+1.5]);
-        //        color("orange") translate([-W/2+3,-0.2*H+1,-0.75]) cube([1.5,0.65*H,T+1.5]);
-        //        color("orange") translate([W/2-5.0,-0.2*H+1,-0.75]) cube([1.5,0.75*H,T+1.5]);
-        //        color("orange") translate([W/2-4.5,-0.2*H+1,-0.75]) cube([1.5,0.65*H,T+1.5]);
             }
         }
 
         }
         
     union() {
-           // translate([-100,-50,6]) cube([200,100,100]);
-            //translate([-100,-50,-40]) cube([200,100,40+T+12]);
-        //rotate([0,0,-30]) translate([-100,0,6]) cube([200,100,100]);
+        // Optional debug cuts
+        // translate([-100,-50,6]) cube([200,100,100]);
+        // translate([-100,-50,-40]) cube([200,100,40+T+12]);
+        // rotate([0,0,-30]) translate([-100,0,6]) cube([200,100,100]);
            
+        // Center cut-out
         translate([-16,0,-0.75]) cube([32,H/2+1.5,T+1+8]);
         translate([-16,-T*sqrt(3),-0.75]) rotate([-60,0,0]) cube([32,H/2+1.5,T*5]);
         
+        // Oblique corner cut-out
         translate([W/2,-Dobj/2-1,T-2]) 
             rotate([0,0,45]) translate([-face/2,-face/2,0]) cube([face,face,3]);
         translate([-W/2,-Dobj/2-1,T-2]) 
