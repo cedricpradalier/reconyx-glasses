@@ -1,4 +1,33 @@
 
+H=25;
+H45=17;
+T=3;
+
+Dobj=20;
+Dled=10;
+
+testLens=1; // type of lens, 1 = 38mm optometric insert, 0 = 40mm
+ 
+
+Dlens=testLens?38:40;
+Tlens=2.05;
+Dholder=testLens?1.5:1.0;
+
+Nlens=1;
+Lstart=11;
+Lholder_ex=4;
+Lholder=Lstart+Nlens*(Tlens+1)+Lholder_ex;
+footH=H/1.8;
+alpha=25;
+Lear=12;
+earT=3;
+earScrew=3.2;
+
+// size of the rotated square removed in the piece corners (in corner_cutouts)
+halfdiag=9;
+face=halfdiag/(sqrt(2)/2)+0.001;
+ 
+
 module ear() {
     difference() {
         cube([8,earT,Lear]);
@@ -7,7 +36,7 @@ module ear() {
 }
 
 module cap() {
-    translate([0,0,Lholder+T-4]) rotate([0,0,screw?-30:0]) union() {
+    translate([0,0,Lholder+T-4]) union() {
              color("blue") difference() {
                 cylinder(h=5, r=Dlens/2+Dholder+2.2,$fn=100);
                  union() {
@@ -133,10 +162,10 @@ module lensholder_mobile() {
             }
 }
 
-module baseplate() {
+module baseplate(width) {
     difference() {
             union() {
-                translate([-W/2,-Dobj/2-1,0]) cube([W,H,T]);
+                translate([-width/2,-Dobj/2-1,0]) cube([width,H,T]);
                 //translate([0,-Dobj/2-1,0]) rotate([-45,0,0]) translate([-Dobj,-H45,0]) cube([2*Dobj,H45,T]);
                 difference() {
                     translate([0,0,-Dobj/2-1+T*sqrt(2)]) rotate([-45,0,0]) 
@@ -154,4 +183,16 @@ module baseplate() {
                 translate([-16,-T*sqrt(3),-0.75]) rotate([-60,0,0]) cube([32,H/2+1.5,T*5]);
             }
         }
+}
+
+module corner_cutouts(width) {
+            // Oblique corner cut-out
+        translate([width/2,-Dobj/2-1,T-2]) 
+            rotate([0,0,45]) translate([-face/2,-face/2,0]) cube([face,face,3]);
+        translate([-width/2,-Dobj/2-1,T-2]) 
+            rotate([0,0,45]) translate([-face/2,-face/2,0]) cube([face,face,3]);
+}
+
+module center_cutout() {
+    translate([-16,0,-0.75]) cube([32,H/2+1.5,T+1+8]);
 }

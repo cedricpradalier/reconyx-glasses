@@ -1,37 +1,16 @@
 
-H=25;
-H45=17;
+
 W=92;
-T=3;
 
 explode=1; // exploded model      
 screw=0; // screw cap
-testLens=1; // type of lens, 1 = 38mm optometric insert, 0 = 40mm
 
-
-Dobj=20;
-Dled=10;
-
-
-Dlens=testLens?38:40;
-Tlens=2.05;
-Dholder=testLens?1.5:1.0;
-
-Nlens=1;
-Lstart=11;
-Lholder_ex=4;
-Lholder=Lstart+Nlens*(Tlens+1)+Lholder_ex;
-footH=H/1.8;
-alpha=25;
-Lear=12;
-earT=3;
-earScrew=3.2;
 
 include <reconyx_common.scad>
 
 difference() {
     union() {
-     translate([0,0,explode?30:0])  cap();
+     translate([0,0,explode?30:0])  rotate([0,0,screw?-30:0]) cap();
 
         lensholder_attached();
 
@@ -40,7 +19,7 @@ difference() {
         }
 
         
-        baseplate();
+        baseplate(W);
 
         
         // Left leg to attach to reconyx 
@@ -66,7 +45,6 @@ difference() {
     union() {
 //            translate([-100,-50,6]) cube([200,100,100]);
 //            translate([-100,footH/2,-40]) cube([200,100,100]);
-        translate([-16,0,-0.75]) cube([32,H/2+1.5,T+1.5+8]);
-        
+        center_cutout();
     }
 }
