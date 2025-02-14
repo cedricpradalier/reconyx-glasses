@@ -170,21 +170,19 @@ difference() {
            
             translate([-W/2-Wflap+3,-Dobj/2-1+H-12,T]) 
             difference() {
-                //cube([25,12,3]);
-                linear_extrude(3) {
+                color("blue") linear_extrude(2) {
                     polygon([[0,0],[Wflap,0],[Wflap+7,6],[Wflap+7,12],[0,12]]);
                 }
                 // Space for a 8mm x 0.75mm magnet
-                translate([6,(12)/2,-0.25]) cylinder(h=1,r=4.5,$fn=100);
+                color("green") translate([6,(12)/2,-0.25]) cylinder(h=1,r=4.5,$fn=100);
             }
             translate([W/2-10,-Dobj/2-1+H-12,T]) 
             difference() {
-                //cube([25,12,3]);
-                linear_extrude(3) {
+                color("blue") linear_extrude(2) {
                     polygon([[0,6],[7,0],[Wflap+7,0],[Wflap+7,12],[0,12]]);
                 }
                 // Space for a 8mm x 0.75mm magnet
-                translate([Wflap+7-6,(12)/2,-0.25]) cylinder(h=1,r=4.5,$fn=100);
+                color("green") translate([Wflap+7-6,(12)/2,-0.25]) cylinder(h=1,r=4.5,$fn=100);
             }
         }
         
@@ -218,7 +216,7 @@ difference() {
            
         // Center cut-out
         translate([-16,0,-0.75]) cube([32,H/2+1.5,T+1+8]);
-        // translate([-16,-T*sqrt(3),-0.75]) rotate([-60,0,0]) cube([32,H/2+1.5,T*5]);
+        translate([-16,-T*sqrt(3),-0.75]) rotate([-60,0,0]) cube([32,H/2+1.5,T*5]);
         
         // Oblique corner cut-out
         translate([W/2,-Dobj/2-1,T-2]) 
