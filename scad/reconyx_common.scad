@@ -9,7 +9,7 @@ Dled=10;
 testLens=1; // type of lens, 1 = 38mm optometric insert, 0 = 40mm
  
 
-Dlens=testLens?38:40;
+Dlens=testLens?38+0.2:40+0.2;
 Tlens=2.05;
 Dholder=testLens?1.5:1.0;
 

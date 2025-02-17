@@ -3,7 +3,7 @@ W=70;
 
 explode=1; // exploded model      
 screw=0; // screw cap
-
+Dmag=8+1;
 
 include <reconyx_common.scad>
 
@@ -39,7 +39,7 @@ difference() {
                     polygon([[0,0],[Wflap,0],[Wflap+7,6],[Wflap+7,12],[0,12]]);
                 }
                 // Space for a 8mm x 0.75mm magnet
-                color("green") translate([6,(12)/2,-0.25]) cylinder(h=1,r=4.5,$fn=100);
+                color("green") translate([6,(12)/2,-0.25]) cylinder(h=1,r=Dmag/2,$fn=100);
             }
             translate([W/2-10,-Dobj/2-1+H-12,T]) 
             difference() {
@@ -47,7 +47,7 @@ difference() {
                     polygon([[0,6],[7,0],[Wflap+7,0],[Wflap+7,12],[0,12]]);
                 }
                 // Space for a 8mm x 0.75mm magnet
-                color("green") translate([Wflap+7-6,(12)/2,-0.25]) cylinder(h=1,r=4.5,$fn=100);
+                color("green") translate([Wflap+7-6,(12)/2,-0.25]) cylinder(h=1,r=Dmag/2,$fn=100);
             }
         }
         
