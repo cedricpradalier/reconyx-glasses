@@ -196,3 +196,13 @@ module corner_cutouts(width) {
 module center_cutout() {
     translate([-16,0,-0.75]) cube([32,H/2+1.5,T+1+8]);
 }
+
+module handle(w,h,radius) {
+    translate([-w/2,0,0]) {
+        cylinder(h,r=radius,$fn=30);
+        translate([w,0,0]) cylinder(h,r=radius,$fn=30);
+        translate([w/2,0,h]) rotate([90,0,0]) rotate_extrude(angle=180,$fn=30) {
+            translate([w/2,0,0]) circle(r=radius);
+        }
+    }
+}

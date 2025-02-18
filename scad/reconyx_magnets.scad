@@ -1,10 +1,12 @@
+use <path_extrude.scad>
 
 W=70;
 
 explode=1; // exploded model      
 screw=0; // screw cap
 Dmag=8+1;
-
+Tflap=0.75;
+Wflap=22;
 include <reconyx_common.scad>
 
 difference() {
@@ -20,9 +22,11 @@ difference() {
         
         baseplate(W);
 
+        translate([W/2+Wflap-5,-Dobj/2-1+H-6,T+2]) rotate([0,0,90]) handle(7,2,1.2);
+        translate([-W/2-Wflap+5,-Dobj/2-1+H-6,T+2]) rotate([0,0,90]) handle(7,2,1.2);
+
         // Flaps to hold the lens holder against the camera enclosure
-        Tflap=0.75;
-        Wflap=22;
+        
         translate([W/2-10,-Dobj/2-1,-Tflap+0.001]) cube([10,5,Tflap]);
         translate([W/2-10,-Dobj/2-1+H-5,-Tflap+0.001]) cube([15,5,Tflap+T]);
         translate([-W/2,-Dobj/2-1,-Tflap+0.001]) cube([10,5,Tflap]);
