@@ -28,7 +28,7 @@ module lensholder_onepart() {
                  
                 difference() {
                     union() {
-                        rotate([0,0,180+alpha]) translate([Dlens/2+Dholder-1,-earT,Hear]) ear(10);
+                        rotate([0,0,180+alpha]) translate([Dlens/2+Dholder-1,0,Hear]) ear(10);
                         rotate([0,0,alpha]) translate([Dlens/2+Dholder-1,0,Hear]) ear(10);
                     }
                     translate([0,0,Lholder1-Hoverlap-0.1]) 
@@ -37,7 +37,7 @@ module lensholder_onepart() {
                 
                  difference() {
                      union() {
-                        translate([-19,-Dobj/2-1,0]) cube([38,H+3,T+1+4.5]);
+                        translate([-19,-Dobj/2-1,0]) cube([38,H+3,T+1+5.75]);
                         translate([-19,-Dobj/2-1+H,-T]) cube([38,3,T]);
                          
                         rotate_extrude(angle=360,$fn=100) {
@@ -45,7 +45,7 @@ module lensholder_onepart() {
                          }
                      }
                     color("green") union() {
-                        translate([0,0,-1]) cylinder(h=Lholder+2,r=Dlens/2-3,$fn=100);
+                        translate([0,0,-1]) cylinder(h=Lholder+2,r=Dlens/2-Dsupport,$fn=100);
                         translate([19,-Dobj/2-1,0]) cube([2,H,5.5]);
                         translate([-21,-Dobj/2-1,0]) cube([2,H,5.5]);
                         translate([0,0,Lstart]) cylinder(h=Tlens+1,r=Dlens/2,$fn=100);
@@ -82,14 +82,14 @@ module lensholder_cap() {
                      }
              }
              rotate([0,0,alpha]) translate([Dlens/2+Dholder+1,-earT,Hear]) ear();
-             rotate([0,0,180+alpha]) translate([Dlens/2+Dholder+1,0,Hear]) ear();
+             rotate([0,0,180+alpha]) translate([Dlens/2+Dholder+1,-earT,Hear]) ear();
         
              translate([0,0,Lholder1-Hoverlap]) 
                 cylinder(h=Hcap, r=Dcap,$fn=100);
         }
         union() {
                 translate([0,0,-1]) cylinder(h=Lholder1+1, r=Dlens/2+Dholder+0.2,$fn=100);
-                translate([0,0,-1]) cylinder(h=Lholder1-Hoverlap+Hcap+2, r=Dlens/2-3,$fn=100);     
+                translate([0,0,-1]) cylinder(h=Lholder1-Hoverlap+Hcap+2, r=Dlens/2-Dsupport,$fn=100);     
             
                 translate([0,0,-Dobj/2-1+T*sqrt(2)-T]) rotate([-45,0,0]) 
                         translate([0,0,-T]) scale([1,sqrt(2),1]) 

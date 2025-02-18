@@ -11,11 +11,12 @@ testLens=1; // type of lens, 1 = 38mm optometric insert, 0 = 40mm
 
 Dlens=testLens?38+0.4:40+0.2;
 Tlens=2.1;
+Dsupport=1.5;
 Dholder=testLens?1.5:1.0;
 
 Nlens=1;
 Lstart=11;
-Lholder_ex=4;
+Lholder_ex=4.5;
 Lholder=Lstart+Nlens*(Tlens+1)+Lholder_ex;
 footH=H/1.8;
 alpha=25;
@@ -84,7 +85,7 @@ module lensholder_attached() {
                         square([Dlens/2+Dholder,Lholder]);
                      }
                     color("green") union() {
-                        translate([0,0,-1]) cylinder(h=Lholder+2,r=Dlens/2-3,$fn=100);
+                        translate([0,0,-1]) cylinder(h=Lholder+2,r=Dlens/2-Dsupport,$fn=100);
                         translate([19,-Dobj/2-1,0]) cube([2,H,5.5]);
                         translate([-21,-Dobj/2-1,0]) cube([2,H,5.5]);
                         for (i = [0:Nlens-1]) {
@@ -150,7 +151,7 @@ module lensholder_mobile() {
                  }
                  // Cut-out in the pink side
                     color("green") union() {
-                        translate([0,0,-1]) cylinder(h=Lholder+2,r=Dlens/2-3,$fn=100);
+                        translate([0,0,-1]) cylinder(h=Lholder+2,r=Dlens/2-Dsupport,$fn=100);
                         // Lens groove
                         for (i = [0:Nlens-1]) {
                             translate([0,0,Lstart+i*(Tlens+1)]) cylinder(h=Tlens,r=Dlens/2,$fn=100);
@@ -177,8 +178,9 @@ module baseplate(width) {
             }
             union() {
                 color("green") translate([0,0,-1]) cylinder(h=T+2,r=Dobj/2,$fn=100);
-                color("green") translate([-26.5,0,-1]) cylinder(h=T+2,r=Dled/2,$fn=100);
-                color("green") translate([26.5,0,-1]) cylinder(h=T+2,r=Dled/2,$fn=100);
+                
+                color("green") translate([-26.5,0,-1]) cylinder(h=T+2,r1=Dled/2,r2=(Dled+3)/2,$fn=100);
+                color("green") translate([26.5,0,-1]) cylinder(h=T+2,r1=Dled/2,r2=(Dled+3)/2,$fn=100);
                 color("orange") translate([-16,0,-0.75]) cube([32,H/2+5,T+1.5]);
                 translate([-16,-T*sqrt(3),-0.75]) rotate([-60,0,0]) cube([32,H/2+1.5,T*5]);
             }
