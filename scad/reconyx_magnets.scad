@@ -4,6 +4,7 @@ W=70;
 
 explode=1; // exploded model      
 screw=0; // screw cap
+add_handle=1; // Do we want to add handles at the end of the magnet flaps
 Dmag=8+1;
 Tflap=0.75;
 Wflap=22;
@@ -22,8 +23,10 @@ difference() {
         
         baseplate(W);
 
-        translate([W/2+Wflap-5,-Dobj/2-1+H-6,T+2]) rotate([0,0,90]) handle(7,2,1.2);
-        translate([-W/2-Wflap+5,-Dobj/2-1+H-6,T+2]) rotate([0,0,90]) handle(7,2,1.2);
+        if (add_handle) {
+            translate([W/2+Wflap-5,-Dobj/2-1+H-6,T+2]) rotate([0,0,90]) handle(7,2,1.2);
+            translate([-W/2-Wflap+5,-Dobj/2-1+H-6,T+2]) rotate([0,0,90]) handle(7,2,1.2);
+        }
 
         // Flaps to hold the lens holder against the camera enclosure
         

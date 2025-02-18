@@ -31,7 +31,7 @@ face=halfdiag/(sqrt(2)/2)+0.001;
 module ear() {
     difference() {
         cube([8,earT,Lear]);
-        translate([4,5,Lear/2]) rotate([90,0,0]) cylinder(h=6,r=earScrew/2,$fn=100);
+        translate([4,5,Lear/2]) rotate([90,0,0]) cylinder(h=6,r=earScrew/2+0.1,$fn=100);
     }
 }
 
