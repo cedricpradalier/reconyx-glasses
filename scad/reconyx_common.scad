@@ -9,8 +9,8 @@ Dled=10;
 testLens=1; // type of lens, 1 = 38mm optometric insert, 0 = 40mm
  
 
-Dlens=testLens?38+0.2:40+0.2;
-Tlens=2.05;
+Dlens=testLens?38+0.4:40+0.2;
+Tlens=2.1;
 Dholder=testLens?1.5:1.0;
 
 Nlens=1;
@@ -21,17 +21,17 @@ footH=H/1.8;
 alpha=25;
 Lear=12;
 earT=3;
-earScrew=3.2;
+earScrew=3.3;
 
 // size of the rotated square removed in the piece corners (in corner_cutouts)
 halfdiag=9;
 face=halfdiag/(sqrt(2)/2)+0.001;
  
 
-module ear() {
+module ear(earW=8) {
     difference() {
-        cube([8,earT,Lear]);
-        translate([4,5,Lear/2]) rotate([90,0,0]) cylinder(h=6,r=earScrew/2+0.1,$fn=100);
+        cube([earW,earT,Lear]);
+        translate([earW-4,5,Lear/2]) rotate([90,0,0]) cylinder(h=6,r=earScrew/2,$fn=100);
     }
 }
 
