@@ -8,7 +8,7 @@ screw=0; // screw cap
 
   
 include <reconyx_common.scad>
-
+// projection() translate([0,0,T+3])
 difference() {
     union() {
       translate([0,0,explode?30:0])  rotate([0,0,screw?-30:0]) cap();

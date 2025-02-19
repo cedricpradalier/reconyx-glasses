@@ -1,3 +1,4 @@
+use <Round-Anything/polyround.scad>
 
 H=25;
 H45=17;
@@ -16,11 +17,11 @@ Dholder=testLens?1.5:1.0;
 
 Nlens=1;
 Lstart=11;
-Lholder_ex=4.5;
+Lholder_ex=3.5;
 Lholder=Lstart+Nlens*(Tlens+1)+Lholder_ex;
 footH=H/1.8;
-alpha=25;
-Lear=12;
+alpha=22;
+Lear=11;
 earT=3;
 earScrew=3.3;
 
@@ -29,10 +30,23 @@ halfdiag=9;
 face=halfdiag/(sqrt(2)/2)+0.001;
  
 
-module ear(earW=8) {
-    difference() {
-        cube([earW,earT,Lear]);
-        translate([earW-4,5,Lear/2]) rotate([90,0,0]) cylinder(h=6,r=earScrew/2,$fn=100);
+module ear(earW=8,peg=0) {
+    if (peg!=0) {
+        union() {
+            // cube([earW,earT,Lear]);
+            rotate([90,0,0]) translate([0,0,-earT]) linear_extrude(earT) {
+                polygon(polyRound([[0,0,1],[0,Lear,1],[earW,Lear,1],[earW,0,1]],20));
+            }
+            translate([earW-4,0,Lear-3-earScrew/2]) rotate([-90,0,0]) cylinder(h=2*earT,r=earScrew/2-0.05,$fn=100);
+        }
+    } else {
+        difference() {
+            // cube([earW,earT,Lear]);
+            rotate([90,0,0]) translate([0,0,-earT]) linear_extrude(earT) {
+                polygon(polyRound([[0,0,1],[0,Lear,1],[earW,Lear,1],[earW,0,1]],20));
+            }
+            translate([earW-4,-1,Lear-3-earScrew/2]) rotate([-90,0,0]) cylinder(h=earT+2,r=earScrew/2,$fn=100);
+        }
     }
 }
 
@@ -137,14 +151,14 @@ module lensholder_mobile() {
                      // Bottom cube (pink side)
                      difference() {
                          union() {
-                            translate([-19,-Dobj/2-1,0]) cube([38,H+3,T+1+5]);
-                             translate([-19,-Dobj/2-1+H,-T]) cube([38,3,T]);
+                            translate([-19,-Dobj/2-1,0]) cube([38,H+5,T+1+5]);
+                             translate([-19,-Dobj/2-1+H,-T]) cube([38,5,T]);
                          }
                          union() {
                             rotate([0,0,180+alpha]) translate([-30,0,-1]) cube([60, H, T+1+10]);
                             // Little grooves to hold the rubber band
-                            translate([-19,-Dobj/2-1+H+3,2]) cylinder(h=4,r=1.5);
-                            translate([19,-Dobj/2-1+H+3,2]) cylinder(h=4,r=1.5);
+                            translate([-19,-Dobj/2-1+H+5,2]) cylinder(h=4,r=1.5);
+                            translate([19,-Dobj/2-1+H+5,2]) cylinder(h=4,r=1.5);
                          }
                      }
                      
