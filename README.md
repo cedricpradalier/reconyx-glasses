@@ -43,6 +43,9 @@ Adding a tiny rubber band forces the lens in place, while keeping a little bit o
 
 ![camera with box lens and rubber](images/IMG_20250211_140146.jpg)
 
+The third design is made to be installed on the enclosure and kept in place with magnets. It is not secured as strongly as the previous designs, but much easier to install in cramped condition. A 3D view of one version of the design is visible here: 
+
+![camera with magnet 1](images/reconyx_magnets_1.png)
 
 ## Finding lenses
 
