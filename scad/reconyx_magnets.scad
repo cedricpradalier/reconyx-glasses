@@ -4,11 +4,11 @@ use <Round-Anything/polyround.scad>
 W=70;
 
 explode=true; // exploded model      
-screw=0; // screw cap
-add_handle=0; // Do we want to add handles at the end of the magnet flaps
+screw=false; // screw cap
+add_handle=false; // Do we want to add handles at the end of the magnet flaps
 detach_flap=false;
-minimag=1;
-Tmag=minimag?0.75:4.0;
+minimag=false;
+Tmag=minimag?0.75:4.5;
 Dmag=minimag?(8+1):(13+1);
 TflapSupport=0.0; // Thickness of support pads. Probably not needed
 Tflap=3.0;
@@ -165,6 +165,22 @@ module cap2() {
         }
 }
 
+module baseflap(hflap) {
+    translate([-9,0,0]) difference() {
+            color("blue") union() {
+                linear_extrude(hflap,convexity=2) {
+                    polygon(polyRound([[2,6,0],[9,0,3],[15,12-Dmag-4,3],[Wflap+7,12-Dmag-4,6],[Wflap+7,12,6],[2,12,0]],20));
+                }
+            }
+            union() {
+                // Space for a 8mm x 0.75mm magnet
+                if (detach_flap) {
+                    translate([6,12-4,-1]) cylinder(h=hflap+2,r=flapScrew/2,$fn=100);
+                }
+            }
+      }
+}
+
 module flap() {
     translate([-9,0,0]) difference() {
                 color("blue") union() {
@@ -186,6 +202,25 @@ module flap() {
                 }
                         
       }
+}
+
+module flap2() {
+    difference() {
+        baseflap(Tmag+0.25+0.5+0.1);
+        union() {
+            color("green") translate([Wflap+7-Dmag/2-2-9,12-(Dmag+4)/2,0.25]) cylinder(h=Tmag+1,r=Dmag/2,$fn=100);
+            if (!detach_flap) {
+                translate([-4,12-4,Tmag]) cylinder(h=1,r=flapScrew/2,$fn=100);
+            }
+        }
+    }
+    translate([0,0,Tmag+0.25+0.5+0.1+(explode?5:0)]) {
+        baseflap(1);
+        translate([Wflap+7-Dmag/2-2-9,12-(Dmag+4)/2,-0.5]) cylinder(h=0.75,r=Dmag/2-0.1,$fn=100);
+        if (!detach_flap) {
+            translate([-4,12-4,-0.5]) cylinder(h=1,r=flapScrew/2-0.1,$fn=100);
+        }
+    }
 }
 
 
@@ -223,9 +258,9 @@ difference() {
         if (1) {
             // little ears to stay attached to the box surface
            
-            translate([-W/2-((explode&&detach_flap)?10:0),-Dobj/2-1+H-12,T+((detach_flap&&explode)?2:0)]) mirror([1,0,0]) flap();
+            translate([-W/2-((explode&&detach_flap)?10:0),-Dobj/2-1+H-12,T+((detach_flap&&explode)?2:0)]) mirror([1,0,0]) flap2();
             
-            translate([W/2+((explode&&detach_flap)?10:0),-Dobj/2-1+H-12,T+((detach_flap&&explode)?2:0)]) flap();
+            translate([W/2+((explode&&detach_flap)?10:0),-Dobj/2-1+H-12,T+((detach_flap&&explode)?2:0)]) flap2();
             if (detach_flap) {
                 translate([-W/2+7+0.1,-Dobj/2-1+H-6,T]) cube([4,6,3]);
                 translate([W/2-11-0.1,-Dobj/2-1+H-6,T]) cube([4,6,3]);
