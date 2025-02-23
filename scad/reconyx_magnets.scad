@@ -8,8 +8,10 @@ screw=false; // screw cap
 add_handle=false; // Do we want to add handles at the end of the magnet flaps
 detach_flap=false;
 minimag=false;
+engrave=true;
 Tmag=minimag?0.75:4.5;
-Dmag=minimag?(8+1):(13+1);
+Tentrefer=minimag?0.75:1;
+Dmag=minimag?(8+1):(12.5+1);
 TflapSupport=0.0; // Thickness of support pads. Probably not needed
 Tflap=3.0;
 Wflap=Dmag+11;
@@ -143,16 +145,22 @@ module cap2() {
     translate([0,0,T]) 
     translate([0,0,Lholder1]) 
     union() {
+        
              color("cyan") difference() {
                 cylinder(h=5, r=Dcap+2.2,$fn=100);
                  union() {
+                     if (engrave) {
+                        translate([0,0,5-0.25]) scale([0.15,0.15,1]) linear_extrude(0.5) {
+                            import("Minion1.svg",center=true);
+                        }
+                    }
                     translate([0,0,-1]) cylinder(h=5, r=Dcap+0.8,$fn=100);
-                     rotate([0,0,0]) translate([0,0,-1]) rotate_extrude(angle=60,$fn=100) {
-                        square([Dcap+3,5]);
-                 }
-                 rotate([0,0,180]) translate([0,0,-1]) rotate_extrude(angle=60,$fn=100) {
-                        square([Dcap+3,5]);
-                 }
+                         rotate([0,0,0]) translate([0,0,-1]) rotate_extrude(angle=60,$fn=100) {
+                            square([Dcap+3,5]);
+                     }
+                     rotate([0,0,180]) translate([0,0,-1]) rotate_extrude(angle=60,$fn=100) {
+                            square([Dcap+3,5]);
+                     }
                  }
             }
             color("black") 
@@ -167,7 +175,7 @@ module cap2() {
 
 module baseflap(hflap) {
     translate([-9,0,0]) difference() {
-            color("blue") union() {
+            color("blue",alpha=0.5) union() {
                 linear_extrude(hflap,convexity=2) {
                     polygon(polyRound([[2,6,0],[9,0,3],[15,12-Dmag-4,3],[Wflap+7,12-Dmag-4,6],[Wflap+7,12,6],[2,12,0]],20));
                 }
@@ -204,91 +212,121 @@ module flap() {
       }
 }
 
-module flap2() {
+module flap2(image=0) {
     difference() {
-        baseflap(Tmag+0.25+0.5+0.1);
+        baseflap(Tmag+Tentrefer+0.5+0.1);
         union() {
-            color("green") translate([Wflap+7-Dmag/2-2-9,12-(Dmag+4)/2,0.25]) cylinder(h=Tmag+1,r=Dmag/2,$fn=100);
-            if (!detach_flap) {
-                translate([-4,12-4,Tmag]) cylinder(h=1,r=flapScrew/2,$fn=100);
-            }
+            color("green") translate([Wflap+7-Dmag/2-2-9,12-(Dmag+4)/2,Tentrefer]) cylinder(h=Tmag+1,r=Dmag/2,$fn=100);
+            //if (!detach_flap) {
+            //    translate([-4,12-4,Tmag]) cylinder(h=1,r=flapScrew/2,$fn=100);
+            //}
+            translate([-2.5,12-3,-1]) scale([2,1,1]) cylinder(h=Tmag+Tentrefer+2,r=flapScrew/2,$fn=100);
+            
         }
     }
-    translate([0,0,Tmag+0.25+0.5+0.1+(explode?5:0)]) {
-        baseflap(1);
+    translate([0,0,Tmag+Tentrefer+0.5+0.1+(explode?5:0)]) {
+        difference() {baseflap(1);
+            if (engrave) {
+                if (image==1) {
+                    translate([15,3,1-0.16]) scale([0.075,0.075,1]) linear_extrude(0.5) {
+                        import("Minion1.svg",center=true);
+                    }
+                }
+                if (image==2) {
+                    translate([13,3,1-0.16]) scale([0.05,0.05,1]) linear_extrude(0.5) {
+                        import("toad.svg",center=true);
+                    }
+                }
+            }
+        }
         translate([Wflap+7-Dmag/2-2-9,12-(Dmag+4)/2,-0.5]) cylinder(h=0.75,r=Dmag/2-0.1,$fn=100);
         if (!detach_flap) {
-            translate([-4,12-4,-0.5]) cylinder(h=1,r=flapScrew/2-0.1,$fn=100);
+            translate([-2.5,12-3,-0.5]) scale([2,1,1]) cylinder(h=1,r=flapScrew/2-0.15,$fn=100);
         }
     }
 }
 
 
+intersection() {
+    // Debug cube to print a tiny bit of the structure
+    //translate([-50,5,0]) cube([20,15,10]);
+    
+    difference() {
+        union() {
+            translate([0,0,explode?60:30])  rotate([0,0,screw?-30:0]) cap2();
 
-difference() {
-    union() {
-        translate([0,0,explode?60:30])  rotate([0,0,screw?-30:0]) cap2();
+            //lensholder_attached();
+            lensholder_onepart();
+            translate([0,0,explode?30:0]) 
+            lensholder_cap();
 
-        //lensholder_attached();
-        lensholder_onepart();
-        translate([0,0,explode?30:0]) 
-        lensholder_cap();
+            if (0) {
+                translate([0,explode?30:0,0]) lensholder_mobile();
+            }
 
-        if (0) {
-            translate([0,explode?30:0,0]) lensholder_mobile();
-        }
-
-        
-        baseplate(W);
-
-        if (add_handle) {
-            translate([W/2+Wflap-5,-Dobj/2-1+H-6,T+2]) rotate([0,0,90]) handle(7,2,1.2);
-            translate([-W/2-Wflap+5,-Dobj/2-1+H-6,T+2]) rotate([0,0,90]) handle(7,2,1.2);
-        }
-
-        // Flaps to hold the lens holder against the camera enclosure
-        
-        translate([W/2-10,-Dobj/2-1,-TflapSupport+0.001]) cube([10,5,TflapSupport]);
-        translate([W/2-10,-Dobj/2-1+H-5,-TflapSupport+0.001]) cube([15,5,TflapSupport+T]);
-        translate([-W/2,-Dobj/2-1,-TflapSupport+0.001]) cube([10,5,TflapSupport]);
-        translate([-W/2-5,-Dobj/2-1+H-5,-TflapSupport+0.001]) cube([15,5,TflapSupport+T]);
-        //translate([W/2,-Dobj/2-1+H-5,0]) cube([8,5,1]);
-        //translate([-W/2-8,-Dobj/2-1+H-5,0]) cube([8,5,1]);
-        
-        if (1) {
-            // little ears to stay attached to the box surface
-           
-            translate([-W/2-((explode&&detach_flap)?10:0),-Dobj/2-1+H-12,T+((detach_flap&&explode)?2:0)]) mirror([1,0,0]) flap2();
             
-            translate([W/2+((explode&&detach_flap)?10:0),-Dobj/2-1+H-12,T+((detach_flap&&explode)?2:0)]) flap2();
-            if (detach_flap) {
-                translate([-W/2+7+0.1,-Dobj/2-1+H-6,T]) cube([4,6,3]);
-                translate([W/2-11-0.1,-Dobj/2-1+H-6,T]) cube([4,6,3]);
+            baseplate(W);
+
+            if (add_handle) {
+                translate([W/2+Wflap-5,-Dobj/2-1+H-6,T+2]) rotate([0,0,90]) handle(7,2,1.2);
+                translate([-W/2-Wflap+5,-Dobj/2-1+H-6,T+2]) rotate([0,0,90]) handle(7,2,1.2);
             }
-        }
-        
-        }
-        
-    union() {
-        // Optional debug cuts
-        // translate([-100,-50,6]) cube([200,100,100]);
-        // translate([-100,-50,-40]) cube([200,100,40+T+12]);
-        // rotate([0,0,-30]) translate([-100,0,6]) cube([200,100,100]);
+
+            // Flaps to hold the lens holder against the camera enclosure
+            
+            translate([W/2-10,-Dobj/2-1,-TflapSupport+0.001]) cube([10,5,TflapSupport]);
+            translate([W/2-10,-Dobj/2-1+H-5,-TflapSupport+0.001]) cube([15,5,TflapSupport+T]);
+            translate([-W/2,-Dobj/2-1,-TflapSupport+0.001]) cube([10,5,TflapSupport]);
+            translate([-W/2-5,-Dobj/2-1+H-5,-TflapSupport+0.001]) cube([15,5,TflapSupport+T]);
+            //translate([W/2,-Dobj/2-1+H-5,0]) cube([8,5,1]);
+            //translate([-W/2-8,-Dobj/2-1+H-5,0]) cube([8,5,1]);
+            
+            if (1) {
+                // little ears to stay attached to the box surface
+               
+                translate([-W/2-1-((explode)?10:0),-Dobj/2-1+H-12,T+((explode)?2:0)]) mirror([1,0,0]) flap2(image=1);
+                
+                translate([W/2+1+((explode)?10:0),-Dobj/2-1+H-12,T+((explode)?2:0)]) flap2(image=2);
+                if (detach_flap) {
+                    translate([-W/2+7+0.1,-Dobj/2-1+H-6,T]) cube([4,6,3]);
+                    translate([W/2-11-0.1,-Dobj/2-1+H-6,T]) cube([4,6,3]);
+                } else {
+                    translate([-W/2+7+0.05-1,-Dobj/2-1+H-6,T]) cube([4,6,3]);
+                    translate([W/2-11-0.05+1,-Dobj/2-1+H-6,T]) cube([4,6,3]);
+                    translate([W/2-2.,-Dobj/2+H-4,T-1]) {
+                        scale([2,1,1]) cylinder(h=1+Tmag,r=flapScrew/2-0.15,$fn=100);
+                    }
+                    translate([-W/2+2.,-Dobj/2+H-4,T-1]) {
+                        scale([2,1,1]) cylinder(h=1+Tmag,r=flapScrew/2-0.15,$fn=100);
+                    }
+                }
+            }
+            
            
-        translate([-16,0,-0.75]) cube([32,H/2+1.5,T+1+8]);
-        
-        if (detach_flap) {
-            translate([W/2-3,-Dobj/2+H-5,-1]) {
-                cylinder(h=T+2+20,r=flapScrew/2,$fn=100);
-                translate([0,0,1]) cube([6,8,2],center=true);
             }
-            translate([-W/2+3,-Dobj/2+H-5,-1]) {
-                cylinder(h=T+2+20,r=flapScrew/2,$fn=100);
-                translate([0,0,1]) cube([6,8.5,2],center=true);
+            
+        union() {
+            // Optional debug cuts
+    //        translate([-100,-50,8]) cube([200,100,100]);
+            // translate([-100,-50,-40]) cube([200,100,40+T+12]);
+            // rotate([0,0,-30]) translate([-100,0,6]) cube([200,100,100]);
+               
+            translate([-16,0,-0.75]) cube([32,H/2+1.5,T+1+8]);
+            
+            if (detach_flap) {
+                translate([W/2-3,-Dobj/2+H-5,-1]) {
+                    cylinder(h=T+2+20,r=flapScrew/2,$fn=100);
+                    translate([0,0,1]) cube([6,8,2],center=true);
+                }
+                translate([-W/2+3,-Dobj/2+H-5,-1]) {
+                    cylinder(h=T+2+20,r=flapScrew/2,$fn=100);
+                    translate([0,0,1]) cube([6,8.5,2],center=true);
+                }
             }
+            
+            corner_cutouts(W);
+            
         }
-        
-        corner_cutouts(W);
-        
     }
+
 }
