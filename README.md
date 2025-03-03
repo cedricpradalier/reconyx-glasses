@@ -31,12 +31,15 @@ With +3.0 correction:
 ## Designs
 The resulting lens holder is designed with [OpenSCAD](https://openscad.org/) to be 3D printed. The SCAD files are in the [scad](scad) folder. The resulting STL files in the [stl](stl) folder.
 
-The first design (reconyx_clip.scad) clips on the camera without any enclosure. 
-![camera with clipped lenses](images/IMG_20250110_174113.jpg)
+The third design is made to be installed on the enclosure and kept in place with magnets. It is not secured as strongly as the previous designs, but much easier to install in cramped condition. This designed is parameterized by the magnet size (10mm diameter, 3mm thickness in the picture below). A 3D view of one version of the design is visible here: 
 
-![camera with clipped lenses CAD1](images/reconyx_clip_1.png)
+![camera with magnet 1](images/reconyx_magnets_1.png)
 
-![camera with clipped lenses CAD2](images/reconyx_clip_2.png)
+A finalized version, can be seen here with the additional engraving, and installed on the camera
+
+![camera with magnet 2](images/IMG_20250224_162453.jpg)
+
+![camera with magnet 3](images/IMG_20250220_101614.jpg)
 
 The second design (reconyx_box.scad) is kept in place by [Reconyx enclosure box](https://www.reconyx.com/product/HyperFire-2-Security-Enclosure).
 
@@ -48,6 +51,13 @@ The camera, in its enclosure, with the lens on is displayed here:
 ![camera with box lens](images/IMG_20250211_101950.jpg)
 
 Adding a tiny rubber band forces the lens in place, while keeping a little bit of flexibility when opening or closing the enclosure:
+
+The first design (reconyx_clip.scad) clips on the camera without any enclosure. 
+![camera with clipped lenses](images/IMG_20250110_174113.jpg)
+
+![camera with clipped lenses CAD1](images/reconyx_clip_1.png)
+
+![camera with clipped lenses CAD2](images/reconyx_clip_2.png)
 
 
 ![camera with box lens and rubber](images/IMG_20250211_140146.jpg)
