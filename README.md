@@ -31,6 +31,7 @@ With +3.0 correction:
 ## Designs
 The resulting lens holder is designed with [OpenSCAD](https://openscad.org/) to be 3D printed. The SCAD files are in the [scad](scad) folder. The resulting STL files in the [stl](stl) folder.
 
+### Magnetic design
 The third design is made to be installed on the enclosure and kept in place with magnets. It is not secured as strongly as the previous designs, but much easier to install in cramped condition. This designed is parameterized by the magnet size (10mm diameter, 3mm thickness in the picture below). A 3D view of one version of the design is visible here: 
 
 ![camera with magnet 1](images/reconyx_magnets_1.png)
@@ -41,10 +42,10 @@ A finalized version, can be seen here with the additional engraving, and install
 
 ![camera with magnet 3](images/IMG_20250220_101614.jpg)
 
-The second design (reconyx_box.scad) is kept in place by [Reconyx enclosure box](https://www.reconyx.com/product/HyperFire-2-Security-Enclosure).
+### Mechanically locked design
+The second design (reconyx_box.scad) is kept in place by the [Reconyx enclosure box](https://www.reconyx.com/product/HyperFire-2-Security-Enclosure).
 
 ![camera with clipped lenses CAD](images/reconyx_box_1.png)
-
 
 The camera, in its enclosure, with the lens on is displayed here:
 
@@ -52,6 +53,9 @@ The camera, in its enclosure, with the lens on is displayed here:
 
 Adding a tiny rubber band forces the lens in place, while keeping a little bit of flexibility when opening or closing the enclosure:
 
+![camera with box lens and rubber](images/IMG_20250211_140146.jpg)
+
+### Direct clip design
 The first design (reconyx_clip.scad) clips on the camera without any enclosure. 
 ![camera with clipped lenses](images/IMG_20250110_174113.jpg)
 
@@ -60,12 +64,9 @@ The first design (reconyx_clip.scad) clips on the camera without any enclosure.
 ![camera with clipped lenses CAD2](images/reconyx_clip_2.png)
 
 
-![camera with box lens and rubber](images/IMG_20250211_140146.jpg)
-
-
 ## Finding lenses
 
-The proposed model is designed to hold [optometrist test lenses](https://m.media-amazon.com/images/I/51xljETiMxL._AC_SX679_.jpg), which are 38mm wide and 2mm thick. It is relatively easy to find 40mm lenses as [high-school optics material](https://jeulin.com/ovio_fr/pr-323333.html). This can be changed with the Dlens and Tlens variables in the scad files. 
+The proposed model is designed to hold [optometrist test lenses](https://fr.aliexpress.com/item/1703330056.html), which are 38mm wide and 2mm thick. It is relatively easy to find 40mm lenses as [high-school optics material](https://jeulin.com/ovio_fr/pr-323333.html). This can be changed with the Dlens and Tlens variables in the scad files. 
 
 The rule of thumb for selecting the focal or the dioptries is simple. The focal should approximately be equivalent to the distance at which the animals are going to be imaged. The focal resulting from a lens is the inverse of the dioptries, in m. 
 
