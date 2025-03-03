@@ -14,20 +14,6 @@ With the proper correction:
 
 ![Original camera correction](images/field_50cm_2delta.jpg)
 
-## Lens testing
-After some testing with my [optometrist](https://www.remillyoptic.fr/), this is the effect of choosing glasses from +2.0 to 3.0 dioptries, to observe an object 40cm away from the camera.
-Without lenses:
-![Naked lens](images/RCNX0023.JPG)
-
-With +2.0 correction:
-![+2.0 dioptries](images/RCNX0066.JPG)
-
-With +2.5 correction:
-![+2.5 dioptries](images/RCNX0105.JPG)
-
-With +3.0 correction:
-![+3.0 dioptries](images/RCNX0135.JPG)
-
 ## Designs
 The resulting lens holder is designed with [OpenSCAD](https://openscad.org/) to be 3D printed. The SCAD files are in the [scad](scad) folder. The resulting STL files in the [stl](stl) folder.
 
@@ -78,5 +64,19 @@ Dioptries | Distances
 3 | 0.33 m
 4 | 0.25 m
 
+
+## Lens testing
+After some testing with my [optometrist](https://www.remillyoptic.fr/), this is the effect of choosing glasses from +2.0 to 3.0 dioptries, to observe an object 40cm away from the camera.
+Without lenses:
+![Naked lens](images/RCNX0023.JPG)
+
+With +2.0 correction:
+![+2.0 dioptries](images/RCNX0066.JPG)
+
+With +2.5 correction:
+![+2.5 dioptries](images/RCNX0105.JPG)
+
+With +3.0 correction:
+![+3.0 dioptries](images/RCNX0135.JPG)
 
 
