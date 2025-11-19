@@ -6,7 +6,7 @@ W=70;
 explode=true; // exploded model      
 screw=false; // screw cap
 add_handle=false; // Do we want to add handles at the end of the magnet flaps
-attach_flap=false;
+attach_flap=true; // True if we want to print in powder, False otherwise
 detach_flap=false;
 minimag=false;
 engrave=true;
@@ -161,7 +161,7 @@ module cap2() {
                 cylinder(h=5.5, r=Dcap+2.2,$fn=100);
                  union() {
                      if (engrave_cap) {
-                        translate([0,0,5.5-0.1]) scale([0.1,0.1,1]) linear_extrude(0.5) {
+                        translate([0,0,5.5-0.16]) scale([0.1,0.1,1]) linear_extrude(0.5) {
                             import("toad.svg",center=true);
                         }
                     }
@@ -231,7 +231,7 @@ module flap2(image=0) {
             //if (!detach_flap) {
             //    translate([-4,12-4,Tmag]) cylinder(h=1,r=flapScrew/2,$fn=100);
             //}
-            translate([-2.5,12-3,-1]) scale([2,1,1]) cylinder(h=Tmag+Tentrefer+2,r=flapScrew/2,$fn=100);
+            translate([-2.5,12-3,attach_flap?(Tmag+Tentrefer-0.5):-1]) scale([2,1,1]) cylinder(h=(attach_flap)?2:(Tmag+Tentrefer+2),r=flapScrew/2,$fn=100);
             
         }
     }
@@ -322,17 +322,19 @@ intersection() {
                 } else {
                     color("gray")translate([-W/2+7+0.05-1,-Dobj/2-1+H-6,T]) cube([4,6,3]);
                     color("gray")translate([W/2-11-0.05+1,-Dobj/2-1+H-6,T]) cube([4,6,3]);
-                    color("gray") translate([W/2-1.5,-Dobj/2+H-4,T-1]) {
-                        linear_extrude(1+Tmag) {
-                            offset(r=-0.15) scale([2,1,1]) circle(r=flapScrew/2,$fn=100);
+                    if (!attach_flap) {                    
+                        color("gray") translate([W/2-1.5,-Dobj/2+H-4,T-1]) {
+                            linear_extrude(1+Tmag) {
+                                offset(r=-0.15) scale([2,1,1]) circle(r=flapScrew/2,$fn=100);
+                            }
+                            //scale([2,1,1]) cylinder(h=1+Tmag+2,r=flapScrew/2-0.15,$fn=100);
                         }
-                        //scale([2,1,1]) cylinder(h=1+Tmag+2,r=flapScrew/2-0.15,$fn=100);
-                    }
-                    color("gray") translate([-W/2+1.5,-Dobj/2+H-4,T-1]) {
-                        linear_extrude(1+Tmag) {
-                            offset(r=-0.15) scale([2,1,1]) circle(r=flapScrew/2,$fn=100);
+                            color("gray") translate([-W/2+1.5,-Dobj/2+H-4,T-1]) {
+                            linear_extrude(1+Tmag) {
+                                offset(r=-0.15) scale([2,1,1]) circle(r=flapScrew/2,$fn=100);
+                            }
+                            // scale([2,1,1]) cylinder(h=1+Tmag,r=flapScrew/2-0.15,$fn=100);
                         }
-                        // scale([2,1,1]) cylinder(h=1+Tmag,r=flapScrew/2-0.15,$fn=100);
                     }
                 }
             }

@@ -18,7 +18,7 @@ With the proper correction:
 The resulting lens holder is designed with [OpenSCAD](https://openscad.org/) to be 3D printed. The SCAD files are in the [scad](scad) folder. The resulting STL files in the [stl](stl) folder.
 
 ### Magnetic design
-The third design is made to be installed on the enclosure and kept in place with magnets. It is not secured as strongly as the previous designs, but much easier to install in cramped condition. This designed is parameterized by the magnet size (10mm diameter, 3mm thickness in the picture below). A 3D view of one version of the design is visible here: 
+The [third design](stl/reconyx_magnets.stl) is made to be installed on the enclosure and kept in place with magnets. It is not secured as strongly as the previous designs, but much easier to install in cramped condition. This designed is parameterized by the magnet size (10mm diameter, 3mm thickness in the picture below). A 3D view of one version of the design is visible here: 
 
 ![camera with magnet 1](images/reconyx_magnets_1.png)
 
@@ -28,8 +28,10 @@ A finalized version, can be seen here with the additional engraving, and install
 
 ![camera with magnet 3](images/IMG_20250220_101614.jpg)
 
+Note that the design was thought to be printed on a filament printer. If you print in a medium that does not rely on support matterial, you can use this [alternative model](stl/reconyx_magnets_no_support.stl). In this design the magnet flap are rigidly attached to the model.
+
 ### Mechanically locked design
-The second design (reconyx_box.scad) is kept in place by the [Reconyx enclosure box](https://www.reconyx.com/product/HyperFire-2-Security-Enclosure).
+The [second design](stl/reconyx_box.stl) is kept in place by the [Reconyx enclosure box](https://www.reconyx.com/product/HyperFire-2-Security-Enclosure).
 
 ![camera with clipped lenses CAD](images/reconyx_box_1.png)
 
@@ -42,7 +44,7 @@ Adding a tiny rubber band forces the lens in place, while keeping a little bit o
 ![camera with box lens and rubber](images/IMG_20250211_140146.jpg)
 
 ### Direct clip design
-The first design (reconyx_clip.scad) clips on the camera without any enclosure. 
+The [first design](stl/reconyx_clip.stl) clips on the camera without any enclosure. 
 ![camera with clipped lenses](images/IMG_20250110_174113.jpg)
 
 ![camera with clipped lenses CAD1](images/reconyx_clip_1.png)
