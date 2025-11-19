@@ -22,11 +22,16 @@ The [third design](stl/reconyx_magnets.stl) is made to be installed on the enclo
 
 ![camera with magnet 1](images/reconyx_magnets_1.png)
 
+After printing, the magnets need to be inserted in the side flap (purple in the image above) and the flap cover glued (we use a standard office glue with our PLA print). The flap can then be glued to the main body. 
+
+Once the lens is inserted into the design, the top part(dark blue here) is placed on top of it and rotated into place. A small screw (3mm diameter, 10mm length) is then used to secure the assembly. The top cover (light blue here) is used to protect the lens while the assembly is in storage.
+
 A finalized version, can be seen here with the additional engraving, and installed on the camera
 
 ![camera with magnet 2](images/IMG_20250224_162453.jpg)
 
 ![camera with magnet 3](images/IMG_20250220_101614.jpg)
+
 
 Note that the design was thought to be printed on a filament printer. If you print in a medium that does not rely on support matterial, you can use this [alternative model](stl/reconyx_magnets_no_support.stl). In this design the magnet flap are rigidly attached to the model.
 
