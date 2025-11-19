@@ -23,7 +23,7 @@ footH=H/1.8;
 alpha=22;
 Lear=11;
 earT=3;
-earScrew=3.3;
+earScrew=3.6;
 
 // size of the rotated square removed in the piece corners (in corner_cutouts)
 halfdiag=9;
@@ -35,17 +35,17 @@ module ear(earW=8,peg=0) {
         union() {
             // cube([earW,earT,Lear]);
             rotate([90,0,0]) translate([0,0,-earT]) linear_extrude(earT) {
-                polygon(polyRound([[0,0,1],[0,Lear,1],[earW,Lear,1],[earW,0,1]],20));
+                polygon(polyRound([[0,-1,1],[0,Lear+1,1],[earW,Lear+1,1],[earW,-1,1]],20));
             }
-            translate([earW-4,0,Lear-3-earScrew/2]) rotate([-90,0,0]) cylinder(h=2*earT,r=earScrew/2-0.15,$fn=100);
+            translate([earW-4.0,0,Lear-3-earScrew/2]) rotate([-90,0,0]) cylinder(h=2*earT,r=earScrew/2-0.25,$fn=100);
         }
     } else {
         difference() {
             // cube([earW,earT,Lear]);
             rotate([90,0,0]) translate([0,0,-earT]) linear_extrude(earT) {
-                polygon(polyRound([[0,0,1],[0,Lear,1],[earW,Lear,1],[earW,0,1]],20));
+                polygon(polyRound([[0,-1,1],[0,Lear+1,1],[earW,Lear+1,1],[earW,-1,1]],20));
             }
-            translate([earW-4,-1,Lear-3-earScrew/2]) rotate([-90,0,0]) cylinder(h=earT+2,r=earScrew/2,$fn=100);
+            translate([earW-4.0,-1,Lear-3-earScrew/2]) rotate([-90,0,0]) cylinder(h=earT+2,r=earScrew/2,$fn=100);
         }
     }
 }

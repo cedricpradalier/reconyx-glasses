@@ -6,12 +6,14 @@ W=70;
 explode=true; // exploded model      
 screw=false; // screw cap
 add_handle=false; // Do we want to add handles at the end of the magnet flaps
+attach_flap=false;
 detach_flap=false;
 minimag=false;
 engrave=true;
-Tmag=minimag?0.75:3.5;
+engrave_cap=true;
+Tmag=minimag?0.75:3.15;
 Tentrefer=minimag?0.75:1;
-Dmag=minimag?(8+1):(10+1);
+Dmag=minimag?(8+1):(10+0.5);
 TflapSupport=0.0; // Thickness of support pads. Probably not needed
 Tflap=3.0;
 Wflap=Dmag+11;
@@ -36,8 +38,17 @@ module lensholder_onepart() {
                  
                 difference() {
                     union() {
-                        rotate([0,0,180+alpha]) translate([Dlens/2+Dholder-1,0,Hear]) ear(10);
-                        rotate([0,0,alpha]) translate([Dlens/2+Dholder-1,0,Hear]) ear(10);
+                        rotate([0,0,180+alpha]) translate([Dlens/2+Dholder-1,0,Hear]) {
+                            ear(11);
+                            translate([0,0.35,0.5]) rotate([-120,0,0]) linear_extrude(earT) {
+                                polygon([[0,8],[0,0],[9.25,0],[3,8]]);
+                            }
+                            //translate([0,0,-6]) cube([5,earT,7]); 
+                        }
+                        rotate([0,0,alpha]) translate([Dlens/2+Dholder-1,0,Hear]) {
+                            ear(11);
+                            translate([0,0,-6]) cube([10,earT,7]); 
+                        }
                     }
                     translate([0,0,Lholder1-Hoverlap-0.1]) 
                         cylinder(h=Hcap+0.2, r=Dcap+0.1,$fn=100);
@@ -45,7 +56,7 @@ module lensholder_onepart() {
                 
                  difference() {
                      union() {
-                        translate([-19,-Dobj/2-1,0]) cube([38,H+3,T+1+5.75]);
+                        translate([-19,-Dobj/2+2,0]) cube([38,H,T+1+5.75]);
                         //translate([-19,-Dobj/2-1+H,-T]) cube([38,3,T]);
                         intersection() {
                             translate([-19,-Dobj/2-1+H,-T]) 
@@ -65,8 +76,8 @@ module lensholder_onepart() {
                      }
                     color("green") union() {
                         translate([0,0,-1]) cylinder(h=Lholder+2,r=Dlens/2-Dsupport,$fn=100);
-                        translate([19,-Dobj/2-1,0]) cube([2,H,5.5]);
-                        translate([-21,-Dobj/2-1,0]) cube([2,H,5.5]);
+                        translate([20.25,-Dobj/2-1,0]) cube([2,H,5.5]);
+                        translate([-22.25,-Dobj/2-1,0]) cube([2,H,5.5]);
                         translate([0,0,Lstart]) cylinder(h=Tlens+1,r=Dlens/2,$fn=100);
                         translate([0,-Dobj/2-1,0]) rotate([-45,0,0]) translate([-Dobj,-H45,-20]) cube([2*Dobj,H45,20]);
                         // Little grooves to hold the rubber band
@@ -101,8 +112,8 @@ module lensholder_cap() {
                      }
              }
              
-             rotate([0,0,alpha]) translate([Dlens/2+Dholder-1,-earT,Hear]) ear(10,1);
-             rotate([0,0,180+alpha]) translate([Dlens/2+Dholder-1,-earT,Hear]) ear(10);
+             rotate([0,0,alpha]) translate([Dlens/2+Dholder-1,-earT,Hear]) ear(11,1);
+             rotate([0,0,180+alpha]) translate([Dlens/2+Dholder-1,-earT,Hear]) ear(11,0);
         
              translate([0,0,Lholder1-Hoverlap]) 
                 cylinder(h=Hcap, r=Dcap,$fn=100);
@@ -147,10 +158,10 @@ module cap2() {
     union() {
         
              color("cyan") difference() {
-                cylinder(h=5, r=Dcap+2.2,$fn=100);
+                cylinder(h=5.5, r=Dcap+2.2,$fn=100);
                  union() {
-                     if (engrave) {
-                        translate([0,0,5-0.25]) scale([0.1,0.1,1]) linear_extrude(0.5) {
+                     if (engrave_cap) {
+                        translate([0,0,5.5-0.1]) scale([0.1,0.1,1]) linear_extrude(0.5) {
                             import("toad.svg",center=true);
                         }
                     }
@@ -240,12 +251,12 @@ module flap2(image=0) {
                     }
                 } else {
                     if (image==1) {
-                        translate([12,4.5,1-0.16]) scale([0.070,0.070,1]) linear_extrude(0.5) {
+                        translate([11,4.75,1-0.16]) scale([0.070,0.070,1]) linear_extrude(0.5) {
                             import("Minion1.svg",center=true);
                         }
                     }
                     if (image==2) {
-                        translate([12,4,1-0.16]) scale([0.05,0.05,1]) linear_extrude(0.5) {
+                        translate([11,5,1-0.16]) scale([0.05,0.05,1]) linear_extrude(0.5) {
                             import("toad.svg",center=true);
                         }
                     }
@@ -302,9 +313,9 @@ intersection() {
             if (1) {
                 // little ears to stay attached to the box surface
                
-                translate([-W/2-1-((explode)?10:0),-Dobj/2-1+H-12,T+((explode)?2:0)]) mirror([1,0,0]) flap2(image=1);
+                translate([-W/2-1-((explode && !attach_flap)?10:0),-Dobj/2-1+H-12,T+((explode && !attach_flap)?2:0)]) mirror([1,0,0]) flap2(image=1);
                 
-                translate([W/2+1+((explode)?10:0),-Dobj/2-1+H-12,T+((explode)?2:0)]) flap2(image=2);
+                translate([W/2+1+((explode && !attach_flap)?10:0),-Dobj/2-1+H-12,T+((explode && !attach_flap)?2:0)]) flap2(image=2);
                 if (detach_flap) {
                     translate([-W/2+7+0.1,-Dobj/2-1+H-6,T]) cube([4,6,3]);
                     translate([W/2-11-0.1,-Dobj/2-1+H-6,T]) cube([4,6,3]);
@@ -331,8 +342,8 @@ intersection() {
             
         union() {
             // Optional debug cuts
-    //        translate([-100,-50,8]) cube([200,100,100]);
-            // translate([-100,-50,-40]) cube([200,100,40+T+12]);
+            //translate([-100,-50,18]) cube([200,100,100]);
+            //translate([-100,-50,-45]) cube([200,100,40+T+12]);
             // rotate([0,0,-30]) translate([-100,0,6]) cube([200,100,100]);
                
             translate([-16,0,-0.75]) cube([32,H/2+1.5,T+1+8]);
