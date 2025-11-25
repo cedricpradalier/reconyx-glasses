@@ -35,7 +35,7 @@ module ear(earW=8,peg=0) {
         union() {
             // cube([earW,earT,Lear]);
             rotate([90,0,0]) translate([0,0,-earT]) linear_extrude(earT) {
-                polygon(polyRound([[0,-1,1],[0,Lear+1,1],[earW,Lear+1,1],[earW,-1,1]],20));
+                polygon(polyRound([[0,-1,1],[0,Lear+1,1],[earW,Lear+1,1],[earW,+2,1],[earW-2,+2,1],[earW-2,-1,1]],20));
             }
             translate([earW-4.0,0,Lear-3-earScrew/2]) rotate([-90,0,0]) cylinder(h=2*earT,r=earScrew/2-0.25,$fn=100);
         }

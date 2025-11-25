@@ -231,7 +231,7 @@ module plug(length,rad) {
             cylinder(h=length,r=rad,$fn=60);
             translate([0,0,length-0.5]) rotate_extrude(angle=360,$fn=60) {
                 //square([rad+0.15,0.40]);
-                polygon([[0,0],[rad+0.15,0],[rad+0.15,0.2],[rad,0.5],[0,0.5]]);
+                polygon([[0,0],[rad+0.0,0],[rad+0.0,0.2],[rad,0.5],[0,0.5]]);
             }
               //cylinder(h=0.40,r=rad+0.15,$fn=60);
         }
@@ -250,21 +250,21 @@ module flap2(image=0) {
             //if (!detach_flap) {
             //    translate([-4,12-4,Tmag]) cylinder(h=1,r=flapScrew/2,$fn=100);
             //}
-            translate([-2.5,12-3,attach_flap?(Tmag+Tentrefer-0.5):-1]) scale([use_plug?1:2,1,1]) cylinder(h=(attach_flap)?2:(Tmag+Tentrefer+2),r=flapScrew/2,$fn=100);
+            translate([-2.5,12-3,attach_flap?(Tmag+Tentrefer-0.5):-1]) scale([use_plug?1.5:2,1,1]) cylinder(h=(attach_flap)?2:(Tmag+Tentrefer+2),r=flapScrew/2,$fn=100);
             if (use_plug) {
                 translate([Wflap-2.6,12-9.85,0])
                     cube([1,5.2,Tflapcover+Tmag+Tentrefer+0.5+0.1]);
-                translate([Wflap-2.6,12-9.85,-0.1]) cube([1.75,5.2,0.6]);
+                translate([Wflap-3.3,12-9.85,-0.1]) cube([1.75,5.2,0.6]);
             }
         }
     }
     translate([0,0,Tmag+Tentrefer+0.5+0.1+(explode?8:0)]) {
         difference() {baseflap(Tflapcover);
             union() {
-                if (use_plug) {
+                if (use_plug && false) {
                     translate([-2.5,12-3,-0.5]) {
                 linear_extrude(2+Tflapcover) {
-                            offset(r=-0.15) scale([use_plug?1:2,1,1]) circle(r=flapScrew/2,$fn=100);
+                            offset(r=-0.15) scale([use_plug?1.5:2,1,1]) circle(r=flapScrew/2,$fn=100);
                  }
                 // scale([2,1,1]) cylinder(h=1,r=flapScrew/2-0.15,$fn=100);
             }
@@ -300,10 +300,10 @@ module flap2(image=0) {
             cylinder(h=0.75,r=Dmag/2-0.1,$fn=100);
             translate([0,0,-0.01]) cylinder(h=0.77,r=Dmag/2-1.1,$fn=100);
         }
-        if (!detach_flap && !use_plug) {
+        if (!detach_flap /*&& !use_plug*/) {
             translate([-2.5,12-3,-0.5]) {
                 linear_extrude(1) {
-                            offset(r=-0.15) scale([use_plug?1:2,1,1]) circle(r=flapScrew/2,$fn=100);
+                            offset(r=-0.15) scale([use_plug?1.5:2,1,1]) circle(r=flapScrew/2,$fn=100);
                  }
                 // scale([2,1,1]) cylinder(h=1,r=flapScrew/2-0.15,$fn=100);
             }
@@ -311,8 +311,8 @@ module flap2(image=0) {
         if (use_plug) {
             translate([Wflap-2.5,12-9.75,-(Tmag+Tentrefer+0.5+0.1)])
             cube([1,5,Tflapcover+Tmag+Tentrefer+0.5+0.1]);
-            translate([Wflap-2.75,12-9.75,-(Tmag+Tentrefer+0.5+0.1)])
-            cube([1.25,5,0.5]);
+            translate([Wflap-3.0,12-9.75,-(Tmag+Tentrefer+0.5+0.1)])
+            cube([1.5,5,0.55]);
         }
     }
 }
@@ -367,22 +367,49 @@ intersection() {
                     if (!attach_flap) {                    
                         color("gray") translate([W/2-1.5,-Dobj/2+H-4,T-(use_plug?0:1)]) {
                             if (use_plug) {
-                                scale([1,1,1]) rotate([0,0,90]) 
-                                plug(1.1+Tmag+Tentrefer+Tflapcover,flapScrew/2-0.15);
+                                //scale([2,1,1]) rotate([0,0,90]) 
+                                //    plug(1.+Tmag+Tentrefer,flapScrew/2-0.15);
+                                linear_extrude(1+Tmag) {
+                                    offset(r=-0.15) scale([1.5,1,1]) circle(r=flapScrew/2,$fn=100);
+                                }
+                                translate([-5.,+3,-T]) rotate([90,0,90]) linear_extrude(10) {
+                                        polygon([[0,0],
+                                            [1.5,1.5],
+                                            [1.5,0.50+T+Tflapcover+Tmag+Tentrefer+0.3],
+                                            [0.5,1.50+T+Tflapcover+Tmag+Tentrefer+0.3],
+                                            [-0.5,1.50+T+Tflapcover+Tmag+Tentrefer+0.3],
+                                            [-0.5,1.50+T+Tflapcover+Tmag+Tentrefer-0.7],
+                                            [0.,1.50+T+Tflapcover+Tmag+Tentrefer-0.7]
+                                        ]);
+                                    }
+       
                             } else {
                                 linear_extrude(1+Tmag) {
-                                    offset(r=-0.15) scale([2,1,1]) circle(r=flapScrew/2,$fn=100);
+                                    offset(r=-0.15) scale([1.5,1,1]) circle(r=flapScrew/2,$fn=100);
                                 }
                             }
                             //scale([2,1,1]) cylinder(h=1+Tmag+2,r=flapScrew/2-0.15,$fn=100);
                         }
                             color("gray") translate([-W/2+1.5,-Dobj/2+H-4,T-(use_plug?0:1)]) {
                                 if (use_plug) {
-                                    scale([1,1,1]) rotate([0,0,90]) 
-                                    plug(1.1+Tmag+Tentrefer+Tflapcover,flapScrew/2-0.15);
+                                    //scale([2,1,1]) rotate([0,0,90]) 
+                                    //    plug(1.+Tmag+Tentrefer,flapScrew/2-0.15);
+                                    linear_extrude(1+Tmag) {
+                                        offset(r=-0.15) scale([1.5,1,1]) circle(r=flapScrew/2,$fn=100);
+                                    }
+                                    translate([-5.,+3,-T]) rotate([90,0,90]) linear_extrude(10) {
+                                        polygon([[0,0],
+                                            [1.5,1.5],
+                                            [1.5,0.50+T+Tflapcover+Tmag+Tentrefer+0.3],
+                                            [0.5,1.50+T+Tflapcover+Tmag+Tentrefer+0.3],
+                                            [-0.5,1.50+T+Tflapcover+Tmag+Tentrefer+0.3],
+                                            [-0.5,1.50+T+Tflapcover+Tmag+Tentrefer-0.7],
+                                            [0.,1.50+T+Tflapcover+Tmag+Tentrefer-0.7]
+                                        ]);
+                                    }
                                 } else {
                                     linear_extrude(1+Tmag) {
-                                        offset(r=-0.15) scale([2,1,1]) circle(r=flapScrew/2,$fn=100);
+                                        offset(r=-0.15) scale([1.5,1,1]) circle(r=flapScrew/2,$fn=100);
                                     }
                                 }
                             // scale([2,1,1]) cylinder(h=1+Tmag,r=flapScrew/2-0.15,$fn=100);
@@ -396,8 +423,8 @@ intersection() {
             
         union() {
             // Optional debug cuts
-            translate([-25,-50,-20]) cube([200,100,200]);
-            translate([-100,-50,-45]) cube([200,45,200]);
+            //translate([-25,-50,-20]) cube([200,100,200]);
+            //translate([-100,-50,-45]) cube([200,45,200]);
             // rotate([0,0,-30]) translate([-100,0,6]) cube([200,100,100]);
                
             translate([-16,0,-0.75]) cube([32,H/2+1.5,T+1+8]);
