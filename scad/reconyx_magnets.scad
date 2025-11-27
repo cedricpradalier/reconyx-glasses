@@ -254,8 +254,8 @@ module flap2(image=0) {
             baseflap(Tmag+Tentrefer+0.5+0.1);
             translate([Wflap-2,7,0]) rotate([90,0,0]) linear_extrude(5) {
                 polygon([[0,0],
-                    [1.5,1.5],
-                    [1.5,0.50+Tflapcover+Tmag+Tentrefer+0.7],
+                    [2.5,1.5],
+                    [2.5,0.50+Tflapcover+Tmag+Tentrefer+0.7],
                     [0.5,1.50+Tflapcover+Tmag+Tentrefer+0.7],
                     [-1,1.50+Tflapcover+Tmag+Tentrefer+0.7],
                     [-1,1.50+Tflapcover+Tmag+Tentrefer-0.5],
@@ -334,8 +334,8 @@ module flap2(image=0) {
             translate([0,0,-0.01]) cylinder(h=0.77,r=Dmag/2-1.1,$fn=100);
         }
         if (!detach_flap /*&& !use_plug*/) {
-            translate([-2.5,12-3,-0.5]) {
-                linear_extrude(1) {
+            translate([-2.5,12-3,-1.5]) {
+                linear_extrude(2) {
                             offset(r=-0.15) scale([use_plug?1.5:2,1,1]) circle(r=flapScrew/2,$fn=100);
                  }
             }
@@ -381,9 +381,9 @@ intersection() {
             if (1) {
                 // little ears to stay attached to the box surface
                
-                translate([-W/2-1-((explode && !attach_flap)?10:0),-Dobj/2-1+H-12,T+((explode && !attach_flap)?2:0)]) mirror([1,0,0]) flap2(image=1);
+                translate([-W/2-1-((explode && !attach_flap)?15:0),-Dobj/2-1+H-12,T+((explode && !attach_flap)?2:0)]) mirror([1,0,0]) flap2(image=1);
                 
-                translate([W/2+1+((explode && !attach_flap)?10:0),-Dobj/2-1+H-12,T+((explode && !attach_flap)?2:0)]) flap2(image=2);
+                translate([W/2+1+((explode && !attach_flap)?15:0),-Dobj/2-1+H-12,T+((explode && !attach_flap)?2:0)]) flap2(image=2);
                 if (detach_flap) {
                     translate([-W/2+7+0.1,-Dobj/2-1+H-6,T]) cube([4,6,3]);
                     translate([W/2-11-0.1,-Dobj/2-1+H-6,T]) cube([4,6,3]);
@@ -395,13 +395,13 @@ intersection() {
                             if (use_plug) {
                                 //scale([2,1,1]) rotate([0,0,90]) 
                                 //    plug(1.+Tmag+Tentrefer,flapScrew/2-0.15);
-                                linear_extrude(1+Tmag) {
+                                linear_extrude(Tmag) {
                                     offset(r=-0.15) scale([1.5,1,1]) circle(r=flapScrew/2,$fn=100);
                                 }
                                 translate([-5.,+3,-T]) rotate([90,0,90]) linear_extrude(10) {
                                         polygon([[0,0],
-                                            [1.5,1.5],
-                                            [1.5,0.50+T+Tflapcover+Tmag+Tentrefer+0.7],
+                                            [2.5,1.5],
+                                            [2.5,0.50+T+Tflapcover+Tmag+Tentrefer+0.7],
                                             [0.5,1.50+T+Tflapcover+Tmag+Tentrefer+0.7],
                                             [-0.7,1.50+T+Tflapcover+Tmag+Tentrefer+0.7],
                                             [-0.7,1.50+T+Tflapcover+Tmag+Tentrefer-0.5],
@@ -418,13 +418,13 @@ intersection() {
                         }
                             color("gray") translate([-W/2+1.5,-Dobj/2+H-4,T-(use_plug?0:1)]) {
                                 if (use_plug) {
-                                    linear_extrude(1+Tmag) {
+                                    linear_extrude(Tmag) {
                                         offset(r=-0.15) scale([1.5,1,1]) circle(r=flapScrew/2,$fn=100);
                                     }
                                     translate([-5.,+3,-T]) rotate([90,0,90]) linear_extrude(10) {
                                         polygon([[0,0],
-                                            [1.5,1.5],
-                                            [1.5,0.50+T+Tflapcover+Tmag+Tentrefer+0.7],
+                                            [2.5,1.5],
+                                            [2.5,0.50+T+Tflapcover+Tmag+Tentrefer+0.7],
                                             [0.5,1.50+T+Tflapcover+Tmag+Tentrefer+0.7],
                                             [-0.7,1.50+T+Tflapcover+Tmag+Tentrefer+0.7],
                                             [-0.7,1.50+T+Tflapcover+Tmag+Tentrefer-0.5],
@@ -447,8 +447,8 @@ intersection() {
             
         union() {
             // Optional debug cuts
-            // translate([-25,-50,-20]) cube([200,100,200]);
-            // translate([-100,-50,-45]) cube([200,45,200]);
+            //translate([-25,-50,-20]) cube([200,100,200]);
+            //translate([-100,-50,-45]) cube([200,45,200]);
             // rotate([0,0,-30]) translate([-100,0,6]) cube([200,100,100]);
                
             translate([-16,0,-0.75]) cube([32,H/2+1.5,T+1+8]);
